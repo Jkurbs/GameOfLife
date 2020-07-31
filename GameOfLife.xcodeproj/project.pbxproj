@@ -18,6 +18,7 @@
 		6D132F7924D4C63A00149D67 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D132F7824D4C63A00149D67 /* Game.swift */; };
 		6D132F7B24D4C6BD00149D67 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D132F7A24D4C6BD00149D67 /* Enums.swift */; };
 		6D132F7E24D4C8D900149D67 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D132F7D24D4C8D900149D67 /* Grid.swift */; };
+		6D132F8024D4C92C00149D67 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D132F7F24D4C92C00149D67 /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		6D132F7824D4C63A00149D67 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		6D132F7A24D4C6BD00149D67 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		6D132F7D24D4C8D900149D67 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		6D132F7F24D4C92C00149D67 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		6D132F7C24D4C8AB00149D67 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				6D132F7F24D4C92C00149D67 /* GameViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				6D132F7924D4C63A00149D67 /* Game.swift in Sources */,
 				6D132F7724D4C5C700149D67 /* SingleCell.swift in Sources */,
 				6D132F7E24D4C8D900149D67 /* Grid.swift in Sources */,
+				6D132F8024D4C92C00149D67 /* GameViewController.swift in Sources */,
 				6D132F6324D4C4FE00149D67 /* ViewController.swift in Sources */,
 				6D132F7B24D4C6BD00149D67 /* Enums.swift in Sources */,
 				6D132F5F24D4C4FE00149D67 /* AppDelegate.swift in Sources */,

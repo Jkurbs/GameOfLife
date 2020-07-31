@@ -161,7 +161,7 @@ class GameEngine: NSObject {
     
   }
   
-  private func cellAt(x: Int, y: Int) -> Cell {
+  private func cellAt(x: Int, y: Int) -> SingleCell {
     var absolutePosition: Int
     // 3,2 on 25 x 25 grid
     absolutePosition = (y * gridSize) + x
@@ -194,8 +194,8 @@ class GameEngine: NSObject {
   //MARK:-
   func performGameTurn() {
     var index = 0
-    var cellsToKill: [Cell] = []
-    var cellsToBirth: [Cell] = []
+    var cellsToKill: [SingleCell] = []
+    var cellsToBirth: [SingleCell] = []
     
   
     for cell in cells {
