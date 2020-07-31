@@ -1,24 +1,294 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17132" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eCP-RR-jGz">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105.1"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Conway's Game Of Life-->
+        <scene sceneID="eSC-uV-dWN">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="rWo-CC-Q6f" customClass="GameViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1nX-GS-DAx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2D-5Y-FCq" customClass="GridView" customModule="GameOfLife" customModuleProvider="target">
+                                <rect key="frame" x="20" y="108" width="374" height="358.5"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcp-Ub-6cd">
+                                <rect key="frame" x="0.0" y="831" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="mjY-TS-YU8"/>
+                                    <barButtonItem title="Options" id="u3H-g8-Bxc">
+                                        <connections>
+                                            <action selector="menuButtonTapped:" destination="rWo-CC-Q6f" id="4mT-TR-c11"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7WY-bc-zvs"/>
+                                    <barButtonItem id="v2Q-O4-and">
+                                        <imageReference key="image" image="play.circle" catalog="system" symbolScale="large"/>
+                                        <connections>
+                                            <action selector="playButtonTapped:" destination="rWo-CC-Q6f" id="mTs-tH-YDm"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fbN-NE-8wI"/>
+                                    <barButtonItem title="Next" id="6J7-7a-lmB">
+                                        <connections>
+                                            <action selector="nextButtonTapped:" destination="rWo-CC-Q6f" id="SM6-Aj-F4x"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vxA-nt-JgX"/>
+                                    <barButtonItem title="Remove" id="HSq-m6-ubd">
+                                        <connections>
+                                            <action selector="clearButtonTapped:" destination="rWo-CC-Q6f" id="qlj-OJ-9Vw"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vQT-fi-qwB"/>
+                                </items>
+                            </toolbar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vsY-6e-sv5">
+                                <rect key="frame" x="16" y="486.5" width="382" height="140"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9z-Le-t8A">
+                                        <rect key="frame" x="139" y="0.0" width="104.5" height="35"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co9-7x-wG5">
+                                        <rect key="frame" x="186" y="35" width="10" height="35"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Population" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9X-1l-ppx">
+                                        <rect key="frame" x="140.5" y="70" width="101" height="35"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MD-Ip-SoT">
+                                        <rect key="frame" x="186" y="105" width="10" height="35"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="faP-an-ewx"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="gkR-9Z-sMP">
+                                <rect key="frame" x="16" y="642.5" width="382" height="73"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a21-7v-70w">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="avy-Ee-eOK" customClass="CustomSlider" customModule="GameOfLife" customModuleProvider="target">
+                                        <rect key="frame" x="-2" y="43" width="386" height="31"/>
+                                        <color key="minimumTrackTintColor" systemColor="systemRedColor"/>
+                                        <connections>
+                                            <action selector="animationSpeedChanged:" destination="rWo-CC-Q6f" eventType="valueChanged" id="FL1-xB-xqO"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="R0I-cJ-IdT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="lcp-Ub-6cd" secondAttribute="bottom" constant="16" id="0V0-CW-fvC"/>
+                            <constraint firstItem="vsY-6e-sv5" firstAttribute="top" secondItem="N2D-5Y-FCq" secondAttribute="bottom" constant="20" id="2yL-G6-vtQ"/>
+                            <constraint firstItem="R0I-cJ-IdT" firstAttribute="trailing" secondItem="gkR-9Z-sMP" secondAttribute="trailing" constant="16" id="90X-gn-k80"/>
+                            <constraint firstItem="R0I-cJ-IdT" firstAttribute="trailing" secondItem="N2D-5Y-FCq" secondAttribute="trailing" constant="20" id="CeD-iX-E87"/>
+                            <constraint firstItem="N2D-5Y-FCq" firstAttribute="leading" secondItem="R0I-cJ-IdT" secondAttribute="leading" constant="20" id="NqT-Z2-Iti"/>
+                            <constraint firstItem="gkR-9Z-sMP" firstAttribute="top" secondItem="vsY-6e-sv5" secondAttribute="bottom" constant="16" id="RN7-yT-GEx"/>
+                            <constraint firstItem="lcp-Ub-6cd" firstAttribute="leading" secondItem="R0I-cJ-IdT" secondAttribute="leading" id="VTj-VZ-5iy"/>
+                            <constraint firstItem="N2D-5Y-FCq" firstAttribute="top" secondItem="R0I-cJ-IdT" secondAttribute="top" constant="20" id="WKL-6F-lCW"/>
+                            <constraint firstItem="lcp-Ub-6cd" firstAttribute="trailing" secondItem="R0I-cJ-IdT" secondAttribute="trailing" id="Wd7-Pe-hyW"/>
+                            <constraint firstItem="R0I-cJ-IdT" firstAttribute="trailing" secondItem="vsY-6e-sv5" secondAttribute="trailing" constant="16" id="bcg-Qi-klK"/>
+                            <constraint firstItem="gkR-9Z-sMP" firstAttribute="leading" secondItem="R0I-cJ-IdT" secondAttribute="leading" constant="16" id="bjg-ll-eqo"/>
+                            <constraint firstItem="N2D-5Y-FCq" firstAttribute="height" secondItem="1nX-GS-DAx" secondAttribute="height" multiplier="0.4" id="fU8-z4-NDC"/>
+                            <constraint firstItem="vsY-6e-sv5" firstAttribute="leading" secondItem="R0I-cJ-IdT" secondAttribute="leading" constant="16" id="vpo-ua-QdM"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Conway's Game Of Life" largeTitleDisplayMode="never" id="weS-JN-4oF">
+                        <barButtonItem key="rightBarButtonItem" image="info.circle" catalog="system" id="UCF-2q-wby">
+                            <connections>
+                                <segue destination="NnJ-SZ-rNB" kind="presentation" id="NDK-RN-POR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="generationLabel" destination="co9-7x-wG5" id="Gux-3Z-4iK"/>
+                        <outlet property="gridView" destination="N2D-5Y-FCq" id="Cq5-cr-Rbs"/>
+                        <outlet property="playButton" destination="v2Q-O4-and" id="OPl-Lk-A0J"/>
+                        <outlet property="populationLabel" destination="0MD-Ip-SoT" id="uhh-7y-zcs"/>
+                        <outlet property="sliderOutlet" destination="avy-Ee-eOK" id="Tzb-1a-yKo"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CT8-P9-2Oa" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="707.24637681159425" y="108.48214285714285"/>
+        </scene>
+        <!--About-->
+        <scene sceneID="A5S-py-7Dk">
+            <objects>
+                <viewController id="MhA-jL-gNH" customClass="AboutViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UPh-1s-Jaf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rules" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7q-pz-Zir">
+                                <rect key="frame" x="16" y="72" width="382" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="YIL-2B-y3Q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JU1-5X-9cH">
+                                <rect key="frame" x="16" y="116" width="382" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Any live cell with fewer than two live neighbours dies, as if by underpopulation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryk-ht-ZhY">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Any live cell with two or three live neighbours lives on to the next generation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dkp-bx-cBH">
+                                        <rect key="frame" x="0.0" y="50" width="382" height="50"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Any live cell with more than three live neighbours dies, as if by overpopulation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K29-19-T3p">
+                                        <rect key="frame" x="0.0" y="100" width="382" height="50"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6m-A0-Opb">
+                                        <rect key="frame" x="0.0" y="150" width="382" height="50"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="cGu-iz-H4t"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About this Algorithm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8FL-JF-zPi">
+                                <rect key="frame" x="16" y="332" width="382" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Owe-37-J5a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbX-WC-duw">
+                                <rect key="frame" x="16" y="374" width="382" height="452"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <string key="text">The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. Early patterns with unknown futures, such as the R-pentomino, led computer programmers to write programs to track the evolution of patterns in the Game of Life. Most of the early algorithms were similar: they represented the patterns as two-dimensional arrays in computer memory. Typically, two arrays are used: one to hold the current generation, and one to calculate its successor. Often 0 and 1 represent dead and live cells, respectively.Alternatively, programmers may abandon the notion of representing the Game of Life field with a two-dimensional array, and use a different data structure, such as a vector of coordinate pairs representing live cells. This allows the pattern to move about the field unhindered, as long as the population does not exceed the size of the live-coordinate array. The drawback is that counting live neighbours becomes a hash-table lookup or search operation, slowing down simulation speed. With more sophisticated data structures this problem can also be largely solved.
+
+For exploring large patterns at great time depths, sophisticated algorithms such as Hashlife may be useful. There is also a method for implementation of the Game of Life and other cellular automata using arbitrary asynchronous updates whilst still exactly emulating the behaviour of the synchronous game.    </string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ZpW-eW-tLd"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8FL-JF-zPi" firstAttribute="leading" secondItem="ZpW-eW-tLd" secondAttribute="leading" constant="16" id="3Vb-9Y-9lZ"/>
+                            <constraint firstItem="JU1-5X-9cH" firstAttribute="top" secondItem="p7q-pz-Zir" secondAttribute="bottom" constant="4" id="4lM-ue-GBm"/>
+                            <constraint firstItem="cbX-WC-duw" firstAttribute="top" secondItem="8FL-JF-zPi" secondAttribute="bottom" constant="2" id="IEq-W6-02Z"/>
+                            <constraint firstItem="8FL-JF-zPi" firstAttribute="top" secondItem="JU1-5X-9cH" secondAttribute="bottom" constant="16" id="IPb-yf-siu"/>
+                            <constraint firstItem="ZpW-eW-tLd" firstAttribute="trailing" secondItem="8FL-JF-zPi" secondAttribute="trailing" constant="16" id="Svk-iz-vCP"/>
+                            <constraint firstItem="ZpW-eW-tLd" firstAttribute="trailing" secondItem="cbX-WC-duw" secondAttribute="trailing" constant="16" id="cXg-Bi-PmO"/>
+                            <constraint firstItem="p7q-pz-Zir" firstAttribute="top" secondItem="ZpW-eW-tLd" secondAttribute="top" constant="16" id="d0t-0v-EUX"/>
+                            <constraint firstItem="cbX-WC-duw" firstAttribute="leading" secondItem="ZpW-eW-tLd" secondAttribute="leading" constant="16" id="j6P-JP-B3a"/>
+                            <constraint firstItem="p7q-pz-Zir" firstAttribute="leading" secondItem="ZpW-eW-tLd" secondAttribute="leading" constant="16" id="laS-K9-Iir"/>
+                            <constraint firstItem="JU1-5X-9cH" firstAttribute="leading" secondItem="ZpW-eW-tLd" secondAttribute="leading" constant="16" id="lmP-ad-hiM"/>
+                            <constraint firstAttribute="bottom" secondItem="cbX-WC-duw" secondAttribute="bottom" constant="16" id="m41-dW-5OI"/>
+                            <constraint firstAttribute="trailing" secondItem="JU1-5X-9cH" secondAttribute="trailing" constant="16" id="yeR-yw-KF8"/>
+                            <constraint firstItem="ZpW-eW-tLd" firstAttribute="trailing" secondItem="p7q-pz-Zir" secondAttribute="trailing" constant="16" id="zPF-wq-VQI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="About" id="P2S-F6-F7l">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="j9e-H5-8hD">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="MhA-jL-gNH" id="uxd-kn-3pN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="geZ-tX-egT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2359" y="108"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UbJ-HF-qkN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eCP-RR-jGz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="UQg-Rv-Iq1">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rWo-CC-Q6f" kind="relationship" relationship="rootViewController" id="lcf-7L-ZeS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CTu-Te-a1E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-200.00000000000003" y="108.48214285714285"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZPF-zX-MSg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NnJ-SZ-rNB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LsT-T0-4JX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MhA-jL-gNH" kind="relationship" relationship="rootViewController" id="kUK-XW-Klv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hH4-r0-zbZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1568" y="108"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

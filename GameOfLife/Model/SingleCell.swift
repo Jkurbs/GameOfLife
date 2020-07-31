@@ -12,7 +12,7 @@ public enum State {
   case alive
 }
 
-public class Cell: NSObject {
+public class SingleCell: NSObject {
   public let x: Int
   public let y: Int
   public var state: State
